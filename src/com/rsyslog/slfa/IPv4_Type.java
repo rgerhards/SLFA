@@ -11,7 +11,7 @@ public class IPv4_Type extends Type {
 
 	
 	@Override
-	public int anon(String msg) {
+	public int anon(String msg, int idx) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

@@ -12,7 +12,7 @@ public abstract class Type {
 		return;
 	}
 	
-	public abstract int anon(String msg);
+	public abstract int anon(String msg, int idx);
 
 	public abstract void getConfig(Properties prop);
 }

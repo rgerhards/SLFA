@@ -18,6 +18,7 @@ public class Config {
 		if(types.contains("ipv4")) {
 			list.add(new IPv4_Type());
 		}
+		list.add(new Char_Type());
 		
 		int listLen = list.size();
 		for(int i = 0; i < listLen; i++) {

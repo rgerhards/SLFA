@@ -24,31 +24,36 @@ public class LogFile {
 	
 	public void anon() {
 		StringBuffer output = new StringBuffer();
-		int newIdx;
-		String msg = null;
+		String msgIn = null;
+		CurrMsg msg = new CurrMsg();
+		int listsize = list.size();
+		
+		msg.setMsgOut(output);
 		try {
-			msg =  fileRd.readLine();
+			msgIn =  fileRd.readLine();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		int i;
-		while(msg != null) {	
+		while(msgIn != null) {	
+			msg.setMsgIn(msgIn);
+			msg.setCurrIdx(0);
+			int msglen = msgIn.length();
 //			System.out.println("TTTTTTT: " + msg);
-			i = 0;
-			while(i < msg.length()) {
-//				System.out.println("test" + msg.length() + i);
-				for(int j = 0; j < list.size(); j++) {
-					newIdx = list.get(j).anon(msg, i, output);
-					if(newIdx != i) {
-						i = newIdx;
+			while(msg.getCurrIdx() < msglen) {
+				msg.setNprocessed(0);
+//				System.out.println("test" + msg.getMsgIn().length() + " " + msg.getCurrIdx());
+				for(int j = 0; j < listsize; j++) {
+//					System.out.println("anon with " + j + " out of " + list.size());
+					list.get(j).anon(msg);
+					if(msg.getNprocessed() > 0) {
+						msg.setCurrIdx(msg.getCurrIdx() + msg.getNprocessed());
 						break;
 					}
 				}
 			}
-			System.out.println(output);
-			output.delete(0, output.length());
+			msg.endMsg();
 			try {
-				msg = fileRd.readLine();
+				msgIn = fileRd.readLine();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

@@ -9,7 +9,7 @@ import java.util.Properties;
 
 public class Config {
 	private InputStream inputStream;
-	private String filename = "/home/jan/eclipse/projects/slfa/src/slfa/testconfig.properties";
+	private String filename = "/home/jan/git/slfa/SLFA/src/com/rsyslog/slfa/testconfig.properties";
  
 	private ArrayList<Type> readConfigFile(Properties prop) {
 		ArrayList<Type> list = new ArrayList<Type>();

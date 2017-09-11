@@ -1,10 +1,13 @@
 package com.rsyslog.slfa;
 
+import java.util.Random;
+
 public class CurrMsg {
 	private String msgIn;
 	private StringBuffer msgOut;
 	private int nprocessed;
 	private int currIdx;
+	private Random rand;
 		
 	public String getMsgIn() {
 		return msgIn;
@@ -36,6 +39,14 @@ public class CurrMsg {
 
 	public void setCurrIdx(int currIdx) {
 		this.currIdx = currIdx;
+	}
+
+	public Random getRand() {
+		return rand;
+	}
+
+	public void setRand(Random rand) {
+		this.rand = rand;
 	}
 
 	public void endMsg() {

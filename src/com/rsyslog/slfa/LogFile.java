@@ -5,10 +5,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class LogFile {
 	private BufferedReader fileRd;
 	private ArrayList<Type> list;
+	private Random rand;
 	
 	public LogFile(String name, ArrayList<Type> typelist) {
 		list = typelist;
@@ -20,6 +22,7 @@ public class LogFile {
 		} catch (FileNotFoundException e) {
 			System.out.println("Exception: " + e);
 		}
+		rand = new Random(System.currentTimeMillis());
 	}
 	
 	public void anon() {
@@ -28,6 +31,7 @@ public class LogFile {
 		CurrMsg msg = new CurrMsg();
 		int listsize = list.size();
 		
+		msg.setRand(rand);
 		msg.setMsgOut(output);
 		try {
 			msgIn =  fileRd.readLine();

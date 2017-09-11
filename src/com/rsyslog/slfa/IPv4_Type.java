@@ -1,6 +1,8 @@
 package com.rsyslog.slfa;
 
+import java.util.Hashtable;
 import java.util.Properties;
+import java.util.Random;
 
 public class IPv4_Type extends Type {
 
@@ -8,6 +10,7 @@ public class IPv4_Type extends Type {
 	private ipv4mode mode;
 	private Boolean cons = false;
 	private int bits;
+	Hashtable<Integer, Integer> hash;
 	
 	private int[] ipParts;
 
@@ -81,14 +84,24 @@ public class IPv4_Type extends Type {
 		return num;
 	}
 	
-	private int codeInt(int num) {
+	private int codeInt(int num, Random rand) {
+		int randomNum = 0;
+		
+		if(bits == 32) {
+			num = 0;
+		} else {
+			num = (num>>>bits)<<bits;
+		}
 		switch(mode) {
 		case ZERO:
+			break;
+		case RANDOM:
 			if(bits == 32) {
-				num = 0;
+				randomNum = rand.nextInt();
 			} else {
-				num = (num>>>bits)<<bits;
+				randomNum = rand.nextInt() & ((1<<bits) - 1);
 			}
+			num = num | randomNum;
 		default:
 			break;
 		}
@@ -109,6 +122,15 @@ public class IPv4_Type extends Type {
 		}
 		msg.getMsgOut().append(parts[3]);
 	}
+
+	private void findIP(int num, CurrMsg msg) {
+		Integer ip = (Integer) hash.get(num);
+		if(ip == null) {
+			ip = codeInt(num, msg.getRand());
+			hash.put(num, ip);
+		}
+		appendIP(ip, msg);
+	}
 	
 	@Override
 	public void anon(CurrMsg msg) {
@@ -118,8 +140,12 @@ public class IPv4_Type extends Type {
 		
 		if(syntax(msg)) {
 			intAddress = ip2num();
-			intAddress = codeInt(intAddress);
-			appendIP(intAddress, msg);
+			if(cons) {
+				findIP(intAddress, msg);
+			} else {
+				intAddress = codeInt(intAddress, msg.getRand());
+				appendIP(intAddress, msg);
+			}
 		}
 	}
 
@@ -152,6 +178,10 @@ public class IPv4_Type extends Type {
 			cons = true;
 		} else {
 			mode = ipv4mode.ZERO;
+		}
+
+		if(cons) {
+			hash = new Hashtable<Integer, Integer>();
 		}
 	}
 	

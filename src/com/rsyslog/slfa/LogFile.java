@@ -14,6 +14,9 @@ public class LogFile {
 	
 	public LogFile(String name, ArrayList<Type> typelist) {
 		list = typelist;
+System.out.println("TTTT" + typelist);
+System.out.println("listlen = " + typelist.size() + "  " + typelist.get(1));
+System.out.println("listlen = " + list.size() + "  " + list.get(1));
 		for(int i = 0; i < list.size(); i++) {
 			list.get(i).onFileStart();
 		}

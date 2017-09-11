@@ -21,6 +21,7 @@ public class Config {
 		list.add(new Char_Type());
 		
 		int listLen = list.size();
+System.out.println("listlen = " + list.size() + "  " + list.get(1));
 		for(int i = 0; i < listLen; i++) {
 			list.get(i).getConfig(prop);
 		}
@@ -33,7 +34,7 @@ public class Config {
 		Properties prop = null;
 		try {
 			prop = new Properties();
- 
+ System.out.println("filename " + filename);
 			inputStream = new FileInputStream(filename);
  
 			if (inputStream != null) {
@@ -43,6 +44,7 @@ public class Config {
 				throw new FileNotFoundException("property file '" + filename + "' not found");
 			}
 		} catch (Exception e) {
+System.out.print("expected");
 			System.out.println("Exception: " + e);
 		} finally {
 			inputStream.close();

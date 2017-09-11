@@ -8,7 +8,7 @@ public class IPv4_Type extends Type {
 
 	private enum ipv4mode {ZERO, RANDOM};
 	private ipv4mode mode;
-	private Boolean cons = false;
+	private Boolean cons;
 	private int bits;
 	Hashtable<Integer, Integer> hash;
 	
@@ -151,6 +151,9 @@ public class IPv4_Type extends Type {
 
 	public IPv4_Type() {
 		ipParts = new int[4];
+		bits = 16;
+		mode = ipv4mode.ZERO;
+		cons = false;
 	}
 	
 	@Override
@@ -160,24 +163,23 @@ public class IPv4_Type extends Type {
 		var = prop.getProperty("ipv4.bits");
 		if(var != null) {
 			bits = Integer.parseInt(var);
-		} else {
-			bits = 16;
 		}
+		
 		if(bits < 1 || bits > 32) {
 			System.out.println("config error: invalid number of ipv4.bits (" + bits + "), corrected to 32");
 			bits = 32;
 		}
 		
 		var = prop.getProperty("ipv4.mode");
-		if(var.contentEquals("zero")) {
-			mode = ipv4mode.ZERO;
-		} else if(var.contentEquals("random")) {
-			mode = ipv4mode.RANDOM;
-		} else if(var.contentEquals("random-consistent")) {
-			mode = ipv4mode.RANDOM;
-			cons = true;
-		} else {
-			mode = ipv4mode.ZERO;
+		if(var != null) {
+			if(var.contentEquals("zero")) {
+				mode = ipv4mode.ZERO;
+			} else if(var.contentEquals("random")) {
+				mode = ipv4mode.RANDOM;
+			} else if(var.contentEquals("random-consistent")) {
+				mode = ipv4mode.RANDOM;
+				cons = true;
+			}
 		}
 
 		if(cons) {

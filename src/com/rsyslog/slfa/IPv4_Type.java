@@ -36,7 +36,7 @@ public class IPv4_Type extends Type {
 		Boolean isIP = false;
 		int i = msg.getCurrIdx();
 		int msglen = msg.getMsgIn().length();
-		
+
 		i = getposint(msg, 0, i);
 		if(ipParts[0] < 0 || ipParts[0] > 255) {
 			return isIP;
@@ -185,10 +185,6 @@ public class IPv4_Type extends Type {
 		if(cons) {
 			hash = new Hashtable<Integer, Integer>();
 		}
-	}
-	
-	public void testtest() {
-		System.out.println("test: " + mode + " " + cons + " " + bits);
 	}
 
 }

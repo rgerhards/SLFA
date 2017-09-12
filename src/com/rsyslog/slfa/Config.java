@@ -18,24 +18,24 @@ public class Config {
 		if(types.contains("ipv4")) {
 			list.add(new IPv4_Type());
 		}
+		if(types.contains("ipv6")) {
+			list.add(new IPv6_Type());
+		}
 		list.add(new Char_Type());
 		
 		int listLen = list.size();
-System.out.println("listlen = " + list.size() + "  " + list.get(1));
 		for(int i = 0; i < listLen; i++) {
 			list.get(i).getConfig(prop);
 		}
-		((IPv4_Type) list.get(0)).testtest();
 		return list;
 	}
-	
+
 	
 	public ArrayList<Type> getTypes() throws IOException {
 		Properties prop = null;
 		try {
 			prop = new Properties();
- System.out.println("filename " + filename);
-			inputStream = new FileInputStream(filename);
+ 			inputStream = new FileInputStream(filename);
  
 			if (inputStream != null) {
 				prop.load(inputStream);
@@ -44,7 +44,6 @@ System.out.println("listlen = " + list.size() + "  " + list.get(1));
 				throw new FileNotFoundException("property file '" + filename + "' not found");
 			}
 		} catch (Exception e) {
-System.out.print("expected");
 			System.out.println("Exception: " + e);
 		} finally {
 			inputStream.close();

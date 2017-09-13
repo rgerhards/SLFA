@@ -135,10 +135,9 @@ public class IPv4_Type extends Type {
 	@Override
 	public void anon(CurrMsg msg) {
 		int intAddress;
-//		if(true)
-//		return;
 		
 		if(syntax(msg)) {
+//System.out.println("found v4");
 			intAddress = ip2num();
 			if(cons) {
 				findIP(intAddress, msg);
